@@ -9,6 +9,7 @@
   "author": "wkh237",
   "license": "MIT",
   "dependencies": {
+    "babel-plugin-syntax-async-functions": "^6.8.0",
     "react-timer-mixin": "^0.13.3"
   },
   "keywords": [
