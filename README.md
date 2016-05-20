@@ -2,7 +2,7 @@
 
 Customizable react native component for number animations.
 
-![preview](./img/animate-number-preview.gif)
+<img src="./img/animate-number-preview.gif" width="256">
 
 - [Examples](#user-content-exmples)
  - [Basic](#user-content-basic)
