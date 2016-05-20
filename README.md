@@ -1,4 +1,4 @@
-# react-native-animate-number
+# react-native-animate-number [![npm version](https://badge.fury.io/js/react-native-animate-number.svg)](https://badge.fury.io/js/react-native-animate-number)
 
 Customizable react native component for number animations.
 
