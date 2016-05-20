@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -t 5000 --require react-native-mock/mock --compilers js:babel-core/register --recursive test/*.js"
+    "test": "./node_modules/mocha/bin/mocha -t 5000 --require react-native-mock/mock --compilers js:babel-core/register --recursive test/*.js"
   },
   "author": "wkh237",
   "license": "MIT",
@@ -30,6 +30,7 @@
     "enzyme": "^2.3.0",
     "flow-bin": "^0.23.1",
     "jsdom": "^9.1.0",
+    "mocha": "^2.4.5",
     "react": "0.14.8",
     "react-addons-test-utils": "0.14.8",
     "react-dom": "0.14.8",
