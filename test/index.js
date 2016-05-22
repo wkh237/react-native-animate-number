@@ -1,7 +1,7 @@
 import React from 'react'
 import {Text} from 'react-native'
 import { shallow, mount } from 'enzyme'
-import AnimateNumber from '../index.js'
+import AnimateNumber from '../dist/index.js'
 import { expect } from 'chai'
 import { jsdom } from 'jsdom'
 
