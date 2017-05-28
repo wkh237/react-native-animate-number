@@ -133,8 +133,9 @@ export default class AnimateNumber extends Component {
     Timer.setTimeout(() => {
 
       let value = (this.endWith - this.startFrom)/this.props.steps
+      let sign = value >= 0 ? 1 : -1
       if(this.props.countBy)
-        value = Math.sign(value)*Math.abs(this.props.countBy)
+        value = sign*Math.abs(this.props.countBy)
       let total = parseFloat(this.state.value) + parseFloat(value)
 
       this.direction = (value > 0)
