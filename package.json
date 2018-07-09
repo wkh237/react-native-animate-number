@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-plugin-syntax-async-functions": "^6.8.0",
+    "react-mixin": "^4.0.0",
     "react-timer-mixin": "^0.13.3"
   },
   "keywords": [
@@ -57,7 +58,7 @@
     "react-native": "0.25.1",
     "react-native-mock": "^0.1.0"
   },
-	"repository": {
-		"url": "https://github.com/wkh237/react-native-animate-number.git"
-	}
+  "repository": {
+    "url": "https://github.com/wkh237/react-native-animate-number.git"
+  }
 }

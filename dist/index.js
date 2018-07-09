@@ -10,11 +10,12 @@ import {
   Text,
   View
 } from 'react-native';
-import Timer from 'react-timer-mixin';
+import TimerMixin from 'react-timer-mixin';
+import reactMixin from 'react-mixin';
 
 const HALF_RAD = Math.PI/2
 
-export default class AnimateNumber extends Component {
+class AnimateNumber extends Component {
 
   props : {
     countBy? : ?number,
@@ -130,7 +131,7 @@ export default class AnimateNumber extends Component {
 
     let progress = this.getAnimationProgress()
 
-    Timer.setTimeout(() => {
+    this.setTimeout(() => {
 
       let value = (this.endWith - this.startFrom)/this.props.steps
       let sign = value >= 0 ? 1 : -1
@@ -173,3 +174,7 @@ export default class AnimateNumber extends Component {
   }
 
 }
+
+reactMixin(AnimateNumber.prototype, TimerMixin);
+
+export default AnimateNumber;
