@@ -89,7 +89,11 @@ export default class AnimateNumber extends Component {
     this.startFrom = this.state.value
     this.endWith = this.props.value
     this.dirty = true
-    this.startAnimate()
+    setTimeout(
+      () => {
+        this.startAnimate()
+      }
+      , this.props.startAt != null ? this.props.startAt : 0);
   }
 
   componentWillUpdate(nextProps, nextState) {
