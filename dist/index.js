@@ -92,6 +92,10 @@ export default class AnimateNumber extends Component {
     this.startAnimate()
   }
 
+  componentWillUnmount () {
+    clearTimeout(Timer);
+  }
+  
   componentWillUpdate(nextProps, nextState) {
 
     // check if start an animation
