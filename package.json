@@ -2,7 +2,7 @@
   "name": "react-native-animate-number",
   "version": "0.1.2",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha -t 5000 --require react-native-mock/mock --compilers js:babel-core/register --recursive test/*.js"
   },
