@@ -83,21 +83,26 @@ export default class AnimateNumber extends Component {
     this.dirty = false;
     this.startFrom = 0;
     this.endWith = 0;
+    this.active = true
   }
 
   componentDidMount() {
     this.startFrom = this.state.value
     this.endWith = this.props.value
     this.dirty = true
+    this.active = true
     this.startAnimate()
   }
 
   componentWillUnmount () {
+    this.active = false
     clearTimeout(this.timer);
   }
 
   componentWillUpdate(nextProps, nextState) {
-
+    if(!this.active){
+      return false
+    }
     // check if start an animation
     if(this.props.value !== nextProps.value) {
       this.startFrom = this.props.value
