@@ -67,6 +67,15 @@ describe('<AnimateNumber/>', () => {
     mount(<AnimateNumber {...props} />)
   })
 
+  it('is initial 0 value formatted ?', () => {
+    let props = {
+      value : 0,
+      formatter : (val) => `$ ${val} ^_^`,
+    }
+    let wrapper = mount(<AnimateNumber {...props} />)
+    expect(wrapper.state().displayValue).to.equal('$ 0 ^_^')
+  })
+
   it('does countBy prop works correctly ?', (done) => {
     let props = {
       value : Math.random() * 50,
