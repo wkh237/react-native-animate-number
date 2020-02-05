@@ -25,7 +25,8 @@ export default class AnimateNumber extends Component {
     formatter : () => {},
     onProgress : () => {},
     onFinish : () => {},
-    startAt? : number
+    startAt? : number,
+    initialValue? : number
   };
 
   static defaultProps = {
@@ -33,6 +34,7 @@ export default class AnimateNumber extends Component {
     timing : 'linear',
     steps : 45,
     value : 0,
+    initialValue : 0,
     formatter : (val) => val,
     onFinish : () => {}
   };
@@ -78,8 +80,8 @@ export default class AnimateNumber extends Component {
     super(props);
     // default values of state and non-state variables
     this.state = {
-      value : 0,
-      displayValue : 0
+      value : props.initialValue,
+      displayValue : props.formatter(props.initialValue)
     }
     this.dirty = false;
     this.startFrom = 0;
