@@ -143,3 +143,11 @@ A function that triggers when text state has updated.
 #### `onFinish: () => void`(optional)
 
 A function that triggers when animation completes.
+
+#### `startAt: number`(optional, default to `0`)
+
+Timeout in milliseconds to start animation after.
+
+#### `initialValue: number`(optional, default to `0`)
+
+A value to start animation from
