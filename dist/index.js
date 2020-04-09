@@ -6,10 +6,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import {
-  Text,
-  View
-} from 'react-native';
+import { Text } from 'react-native';
 import Timer from 'react-timer-mixin';
 
 const HALF_RAD = Math.PI/2
@@ -99,7 +96,7 @@ export default class AnimateNumber extends Component {
       , this.props.startAt != null ? this.props.startAt : 0);
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps) {
 
     // check if start an animation
     if(this.props.value !== nextProps.value) {
