@@ -26,7 +26,9 @@ export default class AnimateNumber extends Component {
     onProgress : () => {},
     onFinish : () => {},
     startAt? : number,
-    initialValue? : number
+    initialValue? : number,
+    textStyle: {},
+
   };
 
   static defaultProps = {
@@ -35,6 +37,7 @@ export default class AnimateNumber extends Component {
     steps : 45,
     value : 0,
     initialValue : 0,
+    textStyle: {},
     formatter : (val) => val,
     onFinish : () => {}
   };
@@ -128,9 +131,10 @@ export default class AnimateNumber extends Component {
 
   render() {
     return (
-      <Text {...this.props}>
+      <Text {...this.props} style={this.props.textStyle}>
         {this.state.displayValue}
-      </Text>)
+      </Text>
+    );
   }
 
   startAnimate() {
