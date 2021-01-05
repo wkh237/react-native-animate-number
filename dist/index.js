@@ -21,20 +21,18 @@ export default class AnimateNumber extends Component {
     interval? : ?number,
     steps? : ?number,
     value : number,
+    defaultValue: number,
     timing : 'linear' | 'easeOut' | 'easeIn' | () => number,
     formatter : () => {},
     onProgress : () => {},
-    onFinish : () => {},
-    startAt? : number,
-    initialValue? : number
+    onFinish : () => {}
   };
 
   static defaultProps = {
     interval : 14,
     timing : 'linear',
     steps : 45,
-    value : 0,
-    initialValue : 0,
+    // value : 0,
     formatter : (val) => val,
     onFinish : () => {}
   };
@@ -76,27 +74,25 @@ export default class AnimateNumber extends Component {
    */
   endWith : number;
 
+  timerId: string;
+
   constructor(props:any) {
     super(props);
     // default values of state and non-state variables
     this.state = {
-      value : props.initialValue,
-      displayValue : props.formatter(props.initialValue)
+      value : props.value,
+      displayValue : props.value
     }
     this.dirty = false;
-    this.startFrom = 0;
-    this.endWith = 0;
+    this.startFrom = props.value;
+    this.endWith = props.value;
   }
 
   componentDidMount() {
     this.startFrom = this.state.value
     this.endWith = this.props.value
     this.dirty = true
-    setTimeout(
-      () => {
-        this.startAnimate()
-      }
-      , this.props.startAt != null ? this.props.startAt : 0);
+    this.startAnimate()
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -123,13 +119,16 @@ export default class AnimateNumber extends Component {
         this.startAnimate();
       }
     }
-
+  }
+    
+  componentWillUnmount() {
+    Timer.clearTimeout(this.timerId)
   }
 
   render() {
     return (
       <Text {...this.props}>
-        {this.state.displayValue}
+        {' ' + this.state.displayValue}
       </Text>)
   }
 
@@ -137,12 +136,11 @@ export default class AnimateNumber extends Component {
 
     let progress = this.getAnimationProgress()
 
-    Timer.setTimeout(() => {
+    this.timerId = Timer.setTimeout(() => {
 
       let value = (this.endWith - this.startFrom)/this.props.steps
-      let sign = value >= 0 ? 1 : -1
       if(this.props.countBy)
-        value = sign*Math.abs(this.props.countBy)
+        value = Math.sign(value)*Math.abs(this.props.countBy)
       let total = parseFloat(this.state.value) + parseFloat(value)
 
       this.direction = (value > 0)
@@ -161,8 +159,7 @@ export default class AnimateNumber extends Component {
         displayValue : this.props.formatter(total)
       })
 
-    }, this.getTimingFunction(this.props.interval, progress))
-
+    }, this.getTimingFunction(this.props.interval, progress))    
   }
 
   getAnimationProgress():number {
