@@ -1,10 +1,3 @@
-/**
- * @author wkh237
- * @version 0.1.1
- */
-
-// @flow
-
 import React, { Component } from 'react';
 import {
   Text,
@@ -16,63 +9,65 @@ const HALF_RAD = Math.PI/2
 
 export default class AnimateNumber extends Component {
 
-  props : {
-    countBy? : ?number,
-    interval? : ?number,
-    steps? : ?number,
-    value : number,
+  props: {
+    countBy?: number,
+    interval?: number,
+    steps?: number,
+    value: number,
     defaultValue: number,
-    timing : 'linear' | 'easeOut' | 'easeIn' | () => number,
-    formatter : () => {},
-    onProgress : () => {},
-    onFinish : () => {}
+    timing: 'linear' | 'easeOut' | 'easeIn' | ((interval: number, progress: number) => number),
+    formatter: (format: number) => number,
+    onProgress: (value: number, total: number) => {},
+    onFinish: (total:number, displayValue: number) => {}
   };
 
   static defaultProps = {
-    interval : 14,
-    timing : 'linear',
-    steps : 45,
-    // value : 0,
-    formatter : (val) => val,
-    onFinish : () => {}
+    interval: 14,
+    timing: 'linear',
+    steps: 45,
+    // value: 0,
+    formatter: (val) => val,
+    onFinish: () => {}
   };
 
   static TimingFunctions = {
 
-    linear : (interval:number, progress:number):number => {
+    linear: (interval:number, progress:number):number => {
       return interval
     },
 
-    easeOut : (interval:number, progress:number):number => {
+    easeOut: (interval:number, progress:number):number => {
       return interval * Math.sin(HALF_RAD*progress) * 5
     },
 
-    easeIn : (interval:number, progress:number):number => {
+    easeIn: (interval:number, progress:number):number => {
       return interval * Math.sin((HALF_RAD - HALF_RAD*progress)) * 5
     },
 
   };
 
-  state : {
-    value? : ?number,
-    displayValue? : ?number
+  state: {
+    value?: number,
+    displayValue?: number
   };
 
   /**
    * Animation direction, true means positive, false means negative.
    * @type {bool}
    */
-  direction : bool;
+  direction: boolean;
   /**
    * Start value of last animation.
    * @type {number}
    */
-  startFrom : number;
+  startFrom: number;
   /**
   * End value of last animation.
   * @type {number}
    */
-  endWith : number;
+  endWith: number;
+
+  dirty: boolean;
 
   timerId: string;
 
@@ -80,8 +75,8 @@ export default class AnimateNumber extends Component {
     super(props);
     // default values of state and non-state variables
     this.state = {
-      value : props.value,
-      displayValue : props.value
+      value: props.value,
+      displayValue: props.value
     }
     this.dirty = false;
     this.startFrom = props.value;
@@ -110,12 +105,12 @@ export default class AnimateNumber extends Component {
       return
     }
     if (this.direction === true) {
-      if(parseFloat(this.state.value) <= parseFloat(this.props.value)) {
+      if(this.state.value <= this.props.value) {
         this.startAnimate();
       }
     }
     else if(this.direction === false){
-      if (parseFloat(this.state.value) >= parseFloat(this.props.value)) {
+      if (this.state.value >= this.props.value) {
         this.startAnimate();
       }
     }
@@ -123,13 +118,6 @@ export default class AnimateNumber extends Component {
     
   componentWillUnmount() {
     Timer.clearTimeout(this.timerId)
-  }
-
-  render() {
-    return (
-      <Text {...this.props}>
-        {' ' + this.state.displayValue}
-      </Text>)
   }
 
   startAnimate() {
@@ -141,11 +129,11 @@ export default class AnimateNumber extends Component {
       let value = (this.endWith - this.startFrom)/this.props.steps
       if(this.props.countBy)
         value = Math.sign(value)*Math.abs(this.props.countBy)
-      let total = parseFloat(this.state.value) + parseFloat(value)
+      let total = this.state.value + value
 
       this.direction = (value > 0)
       // animation terminate conditions
-      if (((this.direction) ^ (total <= this.endWith)) === 1) {
+      if (((this.direction) !== (total <= this.endWith))) {
         this.dirty = false
         total = this.endWith
         this.props.onFinish(total, this.props.formatter(total))
@@ -155,8 +143,8 @@ export default class AnimateNumber extends Component {
         this.props.onProgress(this.state.value, total)
 
       this.setState({
-        value : total,
-        displayValue : this.props.formatter(total)
+        value: total,
+        displayValue: this.props.formatter(total)
       })
 
     }, this.getTimingFunction(this.props.interval, progress))    
@@ -176,4 +164,11 @@ export default class AnimateNumber extends Component {
       return AnimateNumber.TimingFunctions['linear'](interval, progress)
   }
 
+  render() {
+    return (
+      <Text {...this.props}>
+        {' ' + this.state.displayValue}
+      </Text>
+    )
+  }
 }
